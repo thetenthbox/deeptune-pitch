@@ -9,6 +9,9 @@
   @font-face { font-family:'CMU Serif'; font-style:italic; font-weight:500; src:url('fonts/cmunti.woff') format('woff'); }
   @font-face { font-family:'CMU Serif'; font-style:normal; font-weight:700; src:url('fonts/cmunbx.woff') format('woff'); }
   @font-face { font-family:'CMU Serif'; font-style:italic; font-weight:700; src:url('fonts/cmunbi.woff') format('woff'); }
+  @font-face { font-family:'CMU Typewriter'; font-style:normal; font-weight:500; src:url('fonts/cmuntt.woff') format('woff'); }
+  @font-face { font-family:'CMU Typewriter'; font-style:normal; font-weight:700; src:url('fonts/cmuntb.woff') format('woff'); }
+  @font-face { font-family:'CMU Typewriter'; font-style:italic; font-weight:500; src:url('fonts/cmunit.woff') format('woff'); }
 
   :root {
     --blue: #0a1f44;
@@ -162,7 +165,71 @@
     margin-bottom: 4mm;
   }
 
-  svg { width: 100%; height: auto; display: block; }
+  .diagram-wrap svg { width: 100%; height: auto; display: block; }
+  .flow svg { display: inline-block; }
+
+  /* ===== TASK DESIGN FIGURE ===== */
+  .task-fig { width: 152mm; margin: 1mm auto 0; }
+
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 9px rgba(10,31,68,0.08);
+  }
+
+  .stage-h {
+    background: var(--blue-accent);
+    color: #fff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 1.6mm 3.5mm;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stage-h.alt { background: var(--blue); }
+  .stage-h .num {
+    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.7); text-align: center; line-height: 13px;
+    font-size: 7.5pt; flex: none;
+  }
+  .stage-h .sub {
+    margin-left: auto; font-weight: 400; text-transform: none; letter-spacing: 0.02em;
+    font-family: "CMU Serif", Georgia, serif; font-style: italic; font-size: 8pt;
+    color: #c5cfe6;
+  }
+  .stage-b { padding: 2mm 3.8mm; }
+
+  .mono {
+    font-family: "CMU Typewriter", "Courier New", monospace;
+    font-size: 8pt;
+    line-height: 1.46;
+    color: var(--ink);
+    white-space: pre-wrap;
+    margin: 0;
+  }
+  .mono .var   { color: #b08400; font-weight: 700; }
+  .mono .think { color: #b08400; font-weight: 700; }
+  .mono .call  { color: #14306b; font-weight: 700; }
+  .mono .obs   { color: #6b7693; }
+  .mono .loop  { color: #9aa3b8; font-style: italic; }
+  .mono .jk    { color: #14306b; font-weight: 700; }
+  .mono .js    { color: #3a5085; }
+  .mono .jn    { color: #b08400; font-weight: 700; }
+  .mono .cm    { color: #9aa3b8; font-style: italic; }
+
+  .fignote {
+    font-family: "CMU Serif", Georgia, serif;
+    font-size: 8pt; font-style: italic; color: var(--muted);
+    margin-top: 1.4mm;
+  }
+
+  .flow { text-align: center; line-height: 0; margin: 0.5mm 0; }
 
   /* ===== SHARED FOOTER ===== */
   .footer {
@@ -367,6 +434,90 @@
     <div class="footer">
       <span class="brand">Advanced Initiatives Labs</span>
       <span>3</span>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 4 · ENVIRONMENT & TASK DESIGN ============ -->
+  <div class="page page--report">
+    <h1 class="section-title">Environment &amp; Task Design</h1>
+
+    <div class="body">
+      <p>Each episode is a single corporate earnings event. The agent receives the prompt below and a sandbox of documents and market data dated on or before the event, researches the name through open-ended tool calls, and returns a single structured trade. Its numeric fields are scored against the realised post-earnings move to form a dense, continuous reward.</p>
+    </div>
+
+    <div class="task-fig">
+
+      <!-- STAGE 1 · PROMPT -->
+      <div class="stage">
+        <div class="stage-h"><span class="num">1</span> Task prompt <span class="sub">templated per event</span></div>
+        <div class="stage-b">
+<p class="mono">I want to analyze where and how <span class="var">{Aston Martin Lagonda}</span> will move
+for their upcoming earnings on <span class="var">Q{N} {YYYY}</span>. The sandbox
+contains filings, transcripts, news, options chains and price
+history dated on or before <span class="var">{T}</span>. Research the name and
+return your analysis and a single trade as structured JSON.</p>
+        </div>
+      </div>
+
+      <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
+
+      <!-- STAGE 2 · SANDBOX -->
+      <div class="stage">
+        <div class="stage-h alt"><span class="num">2</span> Sandbox &mdash; agentic trajectory <span class="sub">tools: filings · news · options · prices (&le; T)</span></div>
+        <div class="stage-b">
+<p class="mono"><span class="think">think</span> ▸ decompose: demand &amp; ASPs, guidance risk, net debt, implied move
+<span class="call">call </span> ▸ read_filing("AML FY{YYYY−1} 10-K")
+<span class="obs">obs  </span> ◂ revenue, gross margin, £1.2bn net debt, covenant headroom
+<span class="call">call </span> ▸ get_options_chain("AML.L", expiry ≈ earnings)
+<span class="obs">obs  </span> ◂ IV ≈ 78%, options-implied move ± 11.5%
+<span class="call">call </span> ▸ get_prices(["RACE","POAHY","7267.T"], to={T})
+<span class="obs">obs  </span> ◂ luxury-auto peers −3% MoM, momentum weak
+<span class="call">call </span> ▸ search_news("Aston Martin Q{N} guidance deliveries")
+<span class="obs">obs  </span> ◂ soft wholesale volumes, FX headwind flagged
+<span class="loop">⟳ reason ↔ act   ·   refine model, test scenarios   ·   …</span>
+<span class="think">synth</span> ▸ assemble financial model, valuation, and position</p>
+        </div>
+      </div>
+
+      <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
+
+      <!-- STAGE 3 · OUTPUT -->
+      <div class="stage">
+        <div class="stage-h"><span class="num">3</span> Structured output <span class="sub">JSON</span></div>
+        <div class="stage-b">
+<p class="mono">{
+  <span class="jk">"thesis"</span>: <span class="js">"volume miss &amp; FX drag vs. rich expectations"</span>,
+  <span class="jk">"key_drivers"</span>: <span class="js">["volumes", "ASP", "net_debt", "guidance"]</span>,
+  <span class="jk">"financial_model"</span>: { <span class="jk">"revenue_q"</span>: <span class="jn">415.0</span>, <span class="jk">"ebitda_q"</span>: <span class="jn">38.5</span>, <span class="jk">"eps_q"</span>: <span class="jn">−0.42</span> },
+  <span class="jk">"valuation"</span>: { <span class="jk">"method"</span>: <span class="js">"EV/EBITDA"</span>, <span class="jk">"fair_value_gbp"</span>: <span class="jn">1.05</span> },
+  <span class="jk">"position"</span>: <span class="jn">"SHORT"</span>,            <span class="cm">// direction ∈ {LONG, SHORT}</span>
+  <span class="jk">"conviction"</span>: <span class="jn">0.62</span>,            <span class="cm">// 0–1</span>
+  <span class="jk">"expected_move_pct"</span>: <span class="jn">−8.4</span>,      <span class="cm">// post-earnings, T+1</span>
+  <span class="jk">"expected_move_vol"</span>: <span class="jn">11.0</span>       <span class="cm">// forecast |move|</span>
+}</p>
+          <div class="fignote">Bold numeric fields &mdash; direction, conviction and the move forecasts &mdash; are the reward-bearing predictions.</div>
+        </div>
+      </div>
+
+      <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
+
+      <!-- STAGE 4 · GRADER -->
+      <div class="stage">
+        <div class="stage-h alt"><span class="num">4</span> Grader &mdash; continuous reward <span class="sub">scored at T+1</span></div>
+        <div class="stage-b">
+<p class="mono">realised move  r = (P₍ₜ₊₁₎ − P₍ₜ₎) / P₍ₜ₎      <span class="cm">// measured after the print</span>
+<span class="call">R</span> = w₁·𝟙[sign(position)=sign(r)]               <span class="cm">// directional hit</span>
+  + w₂·(1 − |expected_move − |r|| / s)         <span class="cm">// magnitude accuracy</span>
+  + w₃·conviction·sign_match  −  penalties      <span class="cm">// calibration − costs</span></p>
+          <div class="fignote">A dense reward combining directional accuracy, magnitude error, and calibrated conviction.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <span class="brand">Advanced Initiatives Labs</span>
+      <span>4</span>
     </div>
   </div>
 
