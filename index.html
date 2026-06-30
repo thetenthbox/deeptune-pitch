@@ -109,7 +109,7 @@
     font-weight: 700;
     color: var(--blue);
     letter-spacing: -0.3px;
-    margin-bottom: 7mm;
+    margin-bottom: 5mm;
     width: 122mm;
     margin-left: auto;
   }
@@ -169,59 +169,87 @@
   .flow svg { display: inline-block; }
 
   /* ===== TASK DESIGN FIGURE ===== */
-  .task-fig { width: 152mm; margin: 1mm auto 0; }
-
-  .stage {
-    border: 1px solid var(--line);
-    border-radius: 7px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 9px rgba(10,31,68,0.08);
-  }
-
-  .stage-h {
-    background: var(--blue-accent);
-    color: #fff;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 7.5pt;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 1.6mm 3.5mm;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .stage-h.alt { background: var(--blue); }
-  .stage-h .num {
-    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.7); text-align: center; line-height: 13px;
-    font-size: 7.5pt; flex: none;
-  }
-  .stage-h .sub {
-    margin-left: auto; font-weight: 400; text-transform: none; letter-spacing: 0.02em;
-    font-family: "CMU Serif", Georgia, serif; font-style: italic; font-size: 8pt;
-    color: #c5cfe6;
-  }
-  .stage-b { padding: 2mm 3.8mm; }
+  .task-fig { width: 156mm; margin: 1mm auto 0; }
 
   .mono {
     font-family: "CMU Typewriter", "Courier New", monospace;
-    font-size: 8pt;
-    line-height: 1.46;
+    font-size: 7.6pt;
+    line-height: 1.45;
     color: var(--ink);
     white-space: pre-wrap;
     margin: 0;
   }
-  .mono .var   { color: #b08400; font-weight: 700; }
-  .mono .think { color: #b08400; font-weight: 700; }
-  .mono .call  { color: #14306b; font-weight: 700; }
-  .mono .obs   { color: #6b7693; }
-  .mono .loop  { color: #9aa3b8; font-style: italic; }
-  .mono .jk    { color: #14306b; font-weight: 700; }
-  .mono .js    { color: #3a5085; }
-  .mono .jn    { color: #b08400; font-weight: 700; }
-  .mono .cm    { color: #9aa3b8; font-style: italic; }
+  .mono .var { color: #b08400; font-weight: 700; }
+  .mono .jk  { color: #14306b; font-weight: 700; }
+  .mono .js  { color: #3a5085; }
+  .mono .jn  { color: #b08400; font-weight: 700; }
+  .mono .cm  { color: #9aa3b8; font-style: italic; }
+  .mono .call{ color: #14306b; font-weight: 700; }
+
+  /* stage container + corner tag */
+  .fbox { border-radius: 9px; padding: 3mm 4.5mm 3mm; position: relative; }
+  .fbox-tag {
+    position: absolute; top: -8px; left: 13px;
+    font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.6pt;
+    letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700;
+    padding: 1.5px 8px; border-radius: 10px; color: #fff;
+  }
+  .fbox-cap {
+    font-family: "CMU Serif", Georgia, serif; font-style: italic;
+    font-size: 7.8pt; color: var(--muted); margin-top: 2mm;
+  }
+
+  .box-prompt  { background: #eef0f4; border: 1px solid #dde1ea; }
+  .box-prompt  .fbox-tag { background: #5b6577; }
+  .box-sandbox { background: #fdf6df; border: 1px solid #e9d59f; }
+  .box-sandbox .fbox-tag { background: #b08400; }
+  .box-output  { background: #ffffff; border: 1px solid var(--line); box-shadow: 0 2px 9px rgba(10,31,68,0.07); }
+  .box-output  .fbox-tag { background: #14306b; }
+  .box-reward  { background: #0a1f44; border: 1px solid #0a1f44; }
+  .box-reward  .fbox-tag { background: #b08400; }
+  .box-reward  .mono { color: #e7ecf6; }
+  .box-reward  .mono .cm   { color: #8aa0c8; }
+  .box-reward  .mono .call { color: #ffd97a; }
+  .box-reward  .fbox-cap { color: #aab6d2; }
+
+  .sandbox-head {
+    font-family: "CMU Serif", Georgia, serif; font-style: italic;
+    font-size: 7.8pt; color: #8a6d1f; margin-bottom: 1.5mm;
+  }
+
+  /* transcript turns inside the sandbox */
+  .turn { border-left: 3px solid; border-radius: 5px; padding: 1.2mm 2.4mm 1.4mm; margin: 1.2mm 0; }
+  .turn.bot { border-color: #16a34a; background: rgba(22,163,74,0.07); }
+  .turn-role {
+    font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.3pt;
+    letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;
+    color: #4a4a4a; margin-bottom: 1mm; display: flex; align-items: center; gap: 4px;
+  }
+
+  .think { border: 1px solid #e2e4ea; border-radius: 5px; background: #fff; margin: 0.7mm 0; overflow: hidden; }
+  .think-h {
+    background: #eceef3; font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 6.5pt; font-weight: 600; letter-spacing: 0.04em; color: #5a6070; padding: 0.9mm 2mm;
+  }
+  .think-b { padding: 1.3mm 2mm; }
+  .think-b .mono { color: #44474f; font-style: italic; }
+
+  .tool { background: #e9eaf0; border-radius: 6px; padding: 1.3mm 2mm; margin: 0.7mm 0; }
+  .tool-h {
+    font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.8pt; font-weight: 700;
+    color: #14306b; display: flex; align-items: center; gap: 4px; margin-bottom: 1mm;
+  }
+  .tool-cmd { background: #fff; border: 1px solid #dfe0e7; border-radius: 5px; padding: 1mm 2mm; }
+  .tool-cmd .cmlabel { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.2pt; color: #8a8f9a; margin-bottom: 0.4mm; }
+
+  .result { background: #18181b; border-radius: 6px; padding: 1.2mm 2.4mm; margin: 0.7mm 0; }
+  .result-h { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.2pt; color: #9aa0aa; margin-bottom: 0.8mm; }
+  .result .mono { color: #e5e7eb; }
+  .result .mono .gn { color: #8a8f99; }
+  .result .mono .hl { color: #ffd97a; }
+
+  .sb-ellipsis { text-align: center; color: #b08400; font-size: 12pt; line-height: 0.7; letter-spacing: 3px; margin: 1mm 0 0.5mm; }
+  .sb-loop { text-align: center; font-family: "CMU Serif", serif; font-style: italic; font-size: 7.6pt; color: #8a6d1f; margin-bottom: 0.5mm; }
 
   .fignote {
     font-family: "CMU Serif", Georgia, serif;
@@ -229,11 +257,11 @@
     margin-top: 1.4mm;
   }
 
-  .flow { text-align: center; line-height: 0; margin: 0.5mm 0; }
+  .flow { text-align: center; line-height: 0; margin: 0.6mm 0; }
 
   /* ===== SHARED FOOTER ===== */
   .footer {
-    margin-top: 10mm;
+    margin-top: 7mm;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -442,75 +470,82 @@
     <h1 class="section-title">Environment &amp; Task Design</h1>
 
     <div class="body">
-      <p>Each episode is a single corporate earnings event. The agent receives the prompt below and a sandbox of documents and market data dated on or before the event, researches the name through open-ended tool calls, and returns a single structured trade. Its numeric fields are scored against the realised post-earnings move to form a dense, continuous reward.</p>
+      <p>Each episode is one corporate earnings event: the agent researches the name inside a date-bounded sandbox and returns a single structured trade, scored against the realised move.</p>
     </div>
 
     <div class="task-fig">
 
-      <!-- STAGE 1 · PROMPT -->
-      <div class="stage">
-        <div class="stage-h"><span class="num">1</span> Task prompt <span class="sub">templated per event</span></div>
-        <div class="stage-b">
-<p class="mono">I want to analyze where and how <span class="var">{Aston Martin Lagonda}</span> will move
-for their upcoming earnings on <span class="var">Q{N} {YYYY}</span>. The sandbox
+      <!-- 1 · PROMPT (academic light-grey box) -->
+      <div class="fbox box-prompt">
+        <div class="fbox-tag">Prompt</div>
+<p class="mono">I want to analyze where and how <span class="var">{Aston Martin Lagonda}</span> will
+move for their upcoming earnings on <span class="var">Q{N} {YYYY}</span>. The sandbox
 contains filings, transcripts, news, options chains and price
 history dated on or before <span class="var">{T}</span>. Research the name and
 return your analysis and a single trade as structured JSON.</p>
-        </div>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
 
-      <!-- STAGE 2 · SANDBOX -->
-      <div class="stage">
-        <div class="stage-h alt"><span class="num">2</span> Sandbox &mdash; agentic trajectory <span class="sub">tools: filings · news · options · prices (&le; T)</span></div>
-        <div class="stage-b">
-<p class="mono"><span class="think">think</span> ▸ decompose: demand &amp; ASPs, guidance risk, net debt, implied move
-<span class="call">call </span> ▸ read_filing("AML FY{YYYY−1} 10-K")
-<span class="obs">obs  </span> ◂ revenue, gross margin, £1.2bn net debt, covenant headroom
-<span class="call">call </span> ▸ get_options_chain("AML.L", expiry ≈ earnings)
-<span class="obs">obs  </span> ◂ IV ≈ 78%, options-implied move ± 11.5%
-<span class="call">call </span> ▸ get_prices(["RACE","POAHY","7267.T"], to={T})
-<span class="obs">obs  </span> ◂ luxury-auto peers −3% MoM, momentum weak
-<span class="call">call </span> ▸ search_news("Aston Martin Q{N} guidance deliveries")
-<span class="obs">obs  </span> ◂ soft wholesale volumes, FX headwind flagged
-<span class="loop">⟳ reason ↔ act   ·   refine model, test scenarios   ·   …</span>
-<span class="think">synth</span> ▸ assemble financial model, valuation, and position</p>
+      <!-- 2 · RL SANDBOX (yellow, transcript style) -->
+      <div class="fbox box-sandbox">
+        <div class="fbox-tag">RL Sandbox</div>
+        <div class="sandbox-head">tools available: read_filing · search_news · get_options_chain · get_prices &nbsp;(data dated &le; T)</div>
+
+        <div class="turn bot">
+          <div class="turn-role"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>assistant</div>
+          <div class="think">
+            <div class="think-h">Model thinking</div>
+            <div class="think-b"><p class="mono">Decompose the print: volumes &amp; ASPs, guidance risk, net debt, options-implied move. Start with the filings.</p></div>
+          </div>
+          <div class="tool">
+            <div class="tool-h"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#14306b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>read_filing</div>
+            <div class="tool-cmd"><div class="cmlabel">arguments:</div><p class="mono">read_filing("AML FY{YYYY−1} 10-K", sections=["MD&amp;A","liquidity"])</p></div>
+          </div>
+          <div class="result">
+            <div class="result-h">result</div>
+<p class="mono">revenue £1,633m · gross_margin 39.1% · net_debt <span class="hl">£1.21bn</span> · headroom thin</p>
+          </div>
+          <div class="tool">
+            <div class="tool-h"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#14306b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>get_options_chain</div>
+            <div class="tool-cmd"><div class="cmlabel">arguments:</div><p class="mono">get_options_chain("AML.L", expiry ≈ earnings)</p></div>
+          </div>
+          <div class="result">
+            <div class="result-h">result</div>
+<p class="mono">iv_30d 78% · straddle ⇒ implied_move <span class="hl">± 11.5%</span></p>
+          </div>
         </div>
+
+        <div class="sb-loop">⟳ reason ↔ act &nbsp;·&nbsp; peers (RACE, POAHY), news, scenario tests &nbsp;·&nbsp; … &nbsp;·&nbsp; synthesise &rarr; emit trade</div>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
 
-      <!-- STAGE 3 · OUTPUT -->
-      <div class="stage">
-        <div class="stage-h"><span class="num">3</span> Structured output <span class="sub">JSON</span></div>
-        <div class="stage-b">
+      <!-- 3 · OUTPUT (white JSON card) -->
+      <div class="fbox box-output">
+        <div class="fbox-tag">Structured Output</div>
 <p class="mono">{
   <span class="jk">"thesis"</span>: <span class="js">"volume miss &amp; FX drag vs. rich expectations"</span>,
-  <span class="jk">"key_drivers"</span>: <span class="js">["volumes", "ASP", "net_debt", "guidance"]</span>,
-  <span class="jk">"financial_model"</span>: { <span class="jk">"revenue_q"</span>: <span class="jn">415.0</span>, <span class="jk">"ebitda_q"</span>: <span class="jn">38.5</span>, <span class="jk">"eps_q"</span>: <span class="jn">−0.42</span> },
+  <span class="jk">"financial_model"</span>: { <span class="jk">"revenue_q"</span>: <span class="jn">415.0</span>, <span class="jk">"ebitda_q"</span>: <span class="jn">38.5</span> },
   <span class="jk">"valuation"</span>: { <span class="jk">"method"</span>: <span class="js">"EV/EBITDA"</span>, <span class="jk">"fair_value_gbp"</span>: <span class="jn">1.05</span> },
-  <span class="jk">"position"</span>: <span class="jn">"SHORT"</span>,            <span class="cm">// direction ∈ {LONG, SHORT}</span>
-  <span class="jk">"conviction"</span>: <span class="jn">0.62</span>,            <span class="cm">// 0–1</span>
-  <span class="jk">"expected_move_pct"</span>: <span class="jn">−8.4</span>,      <span class="cm">// post-earnings, T+1</span>
-  <span class="jk">"expected_move_vol"</span>: <span class="jn">11.0</span>       <span class="cm">// forecast |move|</span>
+  <span class="jk">"position"</span>: <span class="jn">"SHORT"</span>,         <span class="cm">// ∈ {LONG, SHORT}</span>
+  <span class="jk">"conviction"</span>: <span class="jn">0.62</span>,         <span class="cm">// 0–1</span>
+  <span class="jk">"expected_move_pct"</span>: <span class="jn">−8.4</span>,   <span class="cm">// post-earnings, T+1</span>
+  <span class="jk">"expected_move_vol"</span>: <span class="jn">11.0</span>    <span class="cm">// forecast |move|</span>
 }</p>
-          <div class="fignote">Bold numeric fields &mdash; direction, conviction and the move forecasts &mdash; are the reward-bearing predictions.</div>
-        </div>
+        <div class="fbox-cap">Bold numeric fields &mdash; direction, conviction and the move forecasts &mdash; are the reward-bearing predictions.</div>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
 
-      <!-- STAGE 4 · GRADER -->
-      <div class="stage">
-        <div class="stage-h alt"><span class="num">4</span> Grader &mdash; continuous reward <span class="sub">scored at T+1</span></div>
-        <div class="stage-b">
+      <!-- 4 · REWARD (navy box) -->
+      <div class="fbox box-reward">
+        <div class="fbox-tag">Reward</div>
 <p class="mono">realised move  r = (P₍ₜ₊₁₎ − P₍ₜ₎) / P₍ₜ₎      <span class="cm">// measured after the print</span>
-<span class="call">R</span> = w₁·𝟙[sign(position)=sign(r)]               <span class="cm">// directional hit</span>
-  + w₂·(1 − |expected_move − |r|| / s)         <span class="cm">// magnitude accuracy</span>
-  + w₃·conviction·sign_match  −  penalties      <span class="cm">// calibration − costs</span></p>
-          <div class="fignote">A dense reward combining directional accuracy, magnitude error, and calibrated conviction.</div>
-        </div>
+<span class="call">R</span> = w₁·𝟙[sign(position)=sign(r)]            <span class="cm">// directional hit</span>
+  + w₂·(1 − |expected_move − |r|| / s)      <span class="cm">// magnitude accuracy</span>
+  + w₃·conviction·sign_match  −  penalties   <span class="cm">// calibration − costs</span></p>
+        <div class="fbox-cap">A dense, continuous reward: directional accuracy, magnitude error against the realised move, and calibrated conviction.</div>
       </div>
 
     </div>
