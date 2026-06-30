@@ -180,7 +180,7 @@
   .mono {
     font-family: "CMU Typewriter", "Courier New", monospace;
     font-size: 7.6pt;
-    line-height: 1.45;
+    line-height: 1.34;
     color: var(--ink);
     white-space: pre-wrap;
     margin: 0;
@@ -193,7 +193,7 @@
   .mono .call{ color: #14306b; font-weight: 700; }
 
   /* stage container + corner tag */
-  .fbox { border-radius: 9px; padding: 2.3mm 4.5mm 2.3mm; position: relative; }
+  .fbox { border-radius: 9px; padding: 1.8mm 4.5mm 1.8mm; position: relative; }
   .fbox-tag {
     position: absolute; top: -8px; left: 13px;
     font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.6pt;
@@ -269,6 +269,7 @@
   .footer {
     margin-top: 7mm;
     display: flex;
+    /* footer pegged to the page bottom padding on report pages below */
     justify-content: space-between;
     align-items: baseline;
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -279,6 +280,11 @@
   }
 
   .footer .brand { color: var(--blue); font-weight: 700; }
+
+  /* Peg footer to the bottom padding on pages whose content does not already
+     push to the bottom (page 3 is pegged by its full-height diagram-wrap). */
+  .page:nth-of-type(2) .footer,
+  .page:nth-of-type(4) .footer { margin-top: auto; }
 
   @media print {
     html, body { background: #fff; }
