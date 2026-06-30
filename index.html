@@ -116,6 +116,12 @@
 
   .body { max-width: 122mm; margin-left: auto; }
 
+  /* two-column research-paper layout (pages 3 & 4) */
+  .section-title.full { width: auto; margin-left: 0; }
+  .body.twocol { max-width: none; margin-left: 0; column-count: 2; column-gap: 9mm; }
+  .body.twocol p { text-align: justify; }
+  .body.twocol p:first-child { margin-top: 0; }
+
   .body p {
     font-size: 10pt;
     line-height: 1.55;
@@ -187,7 +193,7 @@
   .mono .call{ color: #14306b; font-weight: 700; }
 
   /* stage container + corner tag */
-  .fbox { border-radius: 9px; padding: 3mm 4.5mm 3mm; position: relative; }
+  .fbox { border-radius: 9px; padding: 2.3mm 4.5mm 2.3mm; position: relative; }
   .fbox-tag {
     position: absolute; top: -8px; left: 13px;
     font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.6pt;
@@ -257,7 +263,7 @@
     margin-top: 1.4mm;
   }
 
-  .flow { text-align: center; line-height: 0; margin: 0.6mm 0; }
+  .flow { text-align: center; line-height: 0; margin: 0.2mm 0; }
 
   /* ===== SHARED FOOTER ===== */
   .footer {
@@ -335,9 +341,9 @@
 
   <!-- ============ PAGE 3 · THE RESEARCH ENGINE ============ -->
   <div class="page page--report">
-    <h1 class="section-title">The Research Engine</h1>
+    <h1 class="section-title full">The Research Engine</h1>
 
-    <div class="body">
+    <div class="body twocol">
       <p><span class="lead">The research engine</span> is the synthesis of decades of financial experience: the judgment of practitioners who have priced risk through cycles, combined with an immense corpus of material gathered from the broadest possible range of sources, including regulatory filings, transcripts, market microstructure, credit documentation, and primary research. It is not a single model but an expression of those materials, their knowledge, and the techniques used to interrogate them.</p>
 
       <p>Operationally, the engine is a <strong>multi-agent system</strong>. A central orchestrator decomposes a question, whether about a company, a sector, or a specific security, into focused tasks and dispatches them to specialised agents for fundamentals, valuation, credit, and market context. Each agent draws on dedicated data stores and a unified knowledge graph that links entities, instruments, and events, so that a claim about a stock is grounded in the same fabric as a claim about its debt. Agents critique and refine one another's output, and the system loops recursively until the analysis converges.</p>
@@ -467,10 +473,11 @@
 
   <!-- ============ PAGE 4 · ENVIRONMENT & TASK DESIGN ============ -->
   <div class="page page--report">
-    <h1 class="section-title">Environment &amp; Task Design</h1>
+    <h1 class="section-title full">Environment &amp; Task Design</h1>
 
-    <div class="body">
-      <p>Each episode is one corporate earnings event: the agent researches the name inside a date-bounded sandbox and returns a single structured trade, scored against the realised move.</p>
+    <div class="body twocol">
+      <p>Each episode is a single corporate earnings event. The agent is given the prompt and a date-bounded RL sandbox of filings, transcripts, news, options chains and price history, and researches the name through open-ended tool calls.</p>
+      <p>It returns one structured trade; the numeric fields of that output are scored against the realised post-earnings move to form a dense, continuous reward signal.</p>
     </div>
 
     <div class="task-fig">
