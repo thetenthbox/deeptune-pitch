@@ -193,7 +193,7 @@
   .mono .call{ color: #14306b; font-weight: 700; }
 
   /* stage container + corner tag */
-  .fbox { border-radius: 9px; padding: 1.8mm 4.5mm 1.8mm; position: relative; }
+  .fbox { border-radius: 9px; padding: 1.6mm 4.5mm 1.6mm; position: relative; }
   .fbox-tag {
     position: absolute; top: -8px; left: 13px;
     font-family: "Helvetica Neue", Arial, sans-serif; font-size: 6.6pt;
@@ -202,7 +202,7 @@
   }
   .fbox-cap {
     font-family: "CMU Serif", Georgia, serif; font-style: italic;
-    font-size: 7.8pt; color: var(--muted); margin-top: 2mm;
+    font-size: 7.8pt; color: var(--muted); margin-top: 1.4mm;
   }
 
   .box-prompt  { background: #eef0f4; border: 1px solid #dde1ea; }
@@ -491,11 +491,14 @@
       <!-- 1 · PROMPT (academic light-grey box) -->
       <div class="fbox box-prompt">
         <div class="fbox-tag">Prompt</div>
-<p class="mono">I want to analyze where and how <span class="var">{Aston Martin Lagonda}</span> will
-move for their upcoming earnings on <span class="var">Q{N} {YYYY}</span>. The sandbox
-contains filings, transcripts, news, options chains and price
-history dated on or before <span class="var">{T}</span>. Research the name and
-return your analysis and a single trade as structured JSON.</p>
+<p class="mono">Analyse how <span class="var">{Aston Martin Lagonda}</span> will trade through its
+<span class="var">Q{N} {YYYY}</span> earnings. Using only sandbox data dated &le; <span class="var">{T}</span>
+(filings, transcripts, news, options, prices), research the name
+and return one JSON object containing: your quarterly fundamentals
+(revenue, EBITDA, EPS, net debt); expected surprise vs consensus
+and a guidance call; an EV/EBITDA valuation with a fair value; and
+a single trade, direction, conviction, and your forecast for the
+signed post-earnings move and its magnitude.</p>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
@@ -519,17 +522,9 @@ return your analysis and a single trade as structured JSON.</p>
             <div class="result-h">result</div>
 <p class="mono">revenue £1,633m · gross_margin 39.1% · net_debt <span class="hl">£1.21bn</span> · headroom thin</p>
           </div>
-          <div class="tool">
-            <div class="tool-h"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#14306b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>get_options_chain</div>
-            <div class="tool-cmd"><div class="cmlabel">arguments:</div><p class="mono">get_options_chain("AML.L", expiry ≈ earnings)</p></div>
-          </div>
-          <div class="result">
-            <div class="result-h">result</div>
-<p class="mono">iv_30d 78% · straddle ⇒ implied_move <span class="hl">± 11.5%</span></p>
-          </div>
         </div>
 
-        <div class="sb-loop">⟳ reason ↔ act &nbsp;·&nbsp; peers (RACE, POAHY), news, scenario tests &nbsp;·&nbsp; … &nbsp;·&nbsp; synthesise &rarr; emit trade</div>
+        <div class="sb-loop">⟳ reason ↔ act &nbsp;·&nbsp; options ⇒ implied_move <b>±11.5%</b> &nbsp;·&nbsp; peers (RACE, POAHY), news, scenario tests &nbsp;·&nbsp; synthesise &rarr; emit trade</div>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
@@ -538,15 +533,18 @@ return your analysis and a single trade as structured JSON.</p>
       <div class="fbox box-output">
         <div class="fbox-tag">Structured Output</div>
 <p class="mono">{
-  <span class="jk">"thesis"</span>: <span class="js">"volume miss &amp; FX drag vs. rich expectations"</span>,
-  <span class="jk">"financial_model"</span>: { <span class="jk">"revenue_q"</span>: <span class="jn">415.0</span>, <span class="jk">"ebitda_q"</span>: <span class="jn">38.5</span> },
-  <span class="jk">"valuation"</span>: { <span class="jk">"method"</span>: <span class="js">"EV/EBITDA"</span>, <span class="jk">"fair_value_gbp"</span>: <span class="jn">1.05</span> },
-  <span class="jk">"position"</span>: <span class="jn">"SHORT"</span>,         <span class="cm">// ∈ {LONG, SHORT}</span>
-  <span class="jk">"conviction"</span>: <span class="jn">0.62</span>,         <span class="cm">// 0–1</span>
-  <span class="jk">"expected_move_pct"</span>: <span class="jn">−8.4</span>,   <span class="cm">// post-earnings, T+1</span>
-  <span class="jk">"expected_move_vol"</span>: <span class="jn">11.0</span>    <span class="cm">// forecast |move|</span>
+  <span class="jk">"thesis"</span>: <span class="js">"volume miss &amp; FX drag into rich, momentum-priced expectations"</span>,
+  <span class="jk">"fundamentals"</span>: { <span class="jk">"revenue"</span>: <span class="jn">415.0</span>, <span class="jk">"ebitda"</span>: <span class="jn">38.5</span>, <span class="jk">"eps"</span>: <span class="jn">−0.07</span>, <span class="jk">"net_debt"</span>: <span class="jn">1235</span> },   <span class="cm">// £m</span>
+  <span class="jk">"consensus"</span>:    { <span class="jk">"rev_surprise_pct"</span>: <span class="jn">−3.2</span>, <span class="jk">"eps_surprise_pct"</span>: <span class="jn">−12.0</span>, <span class="jk">"guidance"</span>: <span class="js">"cut"</span> },
+  <span class="jk">"valuation"</span>:    { <span class="jk">"method"</span>: <span class="js">"EV/EBITDA"</span>, <span class="jk">"target_mult"</span>: <span class="jn">9.5</span>, <span class="jk">"fair_value"</span>: <span class="jn">1.05</span> },   <span class="cm">// x NTM, £/sh</span>
+  <span class="jk">"trade"</span>: {
+    <span class="jk">"direction"</span>: <span class="js">"SHORT"</span>,            <span class="cm">// ∈ {LONG, SHORT, FLAT}</span>
+    <span class="jk">"conviction"</span>: <span class="jn">0.62</span>,            <span class="cm">// 0–1</span>
+    <span class="jk">"expected_move_pct"</span>: <span class="jn">−8.4</span>,     <span class="cm">// signed T+1 return    ← reward</span>
+    <span class="jk">"expected_abs_move"</span>: <span class="jn">11.0</span>      <span class="cm">// |move| vs implied    ← reward</span>
+  }
 }</p>
-        <div class="fbox-cap">Bold numeric fields &mdash; direction, conviction and the move forecasts &mdash; are the reward-bearing predictions.</div>
+        <div class="fbox-cap">Move forecasts and direction are scored on the realised post-earnings move; fundamentals, surprise and valuation are graded against reported actuals.</div>
       </div>
 
       <div class="flow"><svg width="16" height="20" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="0" x2="8" y2="12" stroke="#9aa3b8" stroke-width="1.4"/><path d="M3 11 L8 18 L13 11" fill="none" stroke="#14306b" stroke-width="1.5"/></svg></div>
